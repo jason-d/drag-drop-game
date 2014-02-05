@@ -1,0 +1,26 @@
+body {
+	padding: 15px;
+}
+
+[draggable="true"] {
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	/*Support old versions of WebKit*/
+	-khtml-user-drag: element;
+	-webkit-user-drag: element;
+}
+
+div[draggable="true"], [data-role="draggable"] {
+	cursor: move;
+}
+
+.over {
+	background-color: #fff;
+	border: 1px dashed #999;
+}
+
+.drag {
+	opacity: 0.25;
+}
