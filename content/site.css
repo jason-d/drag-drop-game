@@ -1,5 +1,6 @@
 body {
 	padding: 15px;
+	background-color: #96e4f9
 }
 
 [draggable="true"] {
@@ -22,5 +23,38 @@ div[draggable="true"], [data-role="draggable"] {
 }
 
 .drag {
-	opacity: 0.25;
+	opacity: 0.5;
 }
+
+/*
+#slots {
+	margin: 0 auto;
+	border:  1px solid black;
+}
+
+#pile {
+	margin: 50px auto 0 auto;
+	border:  1px solid black;
+}
+
+#cardSlots, #cardPile {
+	width: 910px;
+	height: 120px;
+	padding: 20px;
+	border: 2px solid #333;
+}
+
+#slots div, #pile div {
+	float: left;
+	width: 58px;
+	height: 78px;
+	padding: 10px;
+	padding-top: 40px;
+	padding-bottom: 0;
+	margin: 0 0 0 10px;
+}
+
+#cardSlots div:first-child, #cardPile div:first-child {
+  margin-left: 0;
+}
+*/

@@ -4,16 +4,17 @@
     <head>
         <meta charset="utf-8" />
         <title>Drag & Droppin'</title>
-		<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" />
 		<link href="/content/site.css" rel="stylesheet" />
 		<script src="//ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.7.1.js" type="text/javascript"></script>
     </head>
     <body>
 		<div class="container">
-			<div class="well">
+			<div id="pile" class="row center-block">
 				<div class="well" data-dnd-role="draggable"></div>
 			</div>
-			<div class="well">
+			<div id="slots" class="row center-block">
+				<div class="well center-block" data-dnd-role="dropzone"></div>
 				<div class="well" data-dnd-role="dropzone"></div>
 				<div class="well" data-dnd-role="dropzone"></div>
 				<div class="well" data-dnd-role="dropzone"></div>
