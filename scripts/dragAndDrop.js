@@ -57,6 +57,8 @@ var d$d = (function () {
 
 	var dragOver = function (e) {
 
+		cancel(e);
+
 		$(this).addClass(_dragTargetClassName);
 	};
 
