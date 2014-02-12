@@ -1,6 +1,19 @@
-(function () {
+(function (dndHelper) {
 
 	var initialize = function () {
+
+		var cards = ['red', 'blue', 'green', 'yellow', 'orange'];
+		var targetCards = getTargetCards(shuffle(cards));
+
+		forEach.call(targetCards, function (card) {
+
+			var element = $('<div/>');
+			element.attr('data-dnd-role', 'dropzone');
+			element.attr('data-value', card);
+			element.addClass('well');
+
+			$('#targets').append(element);
+		});
 
 		var targets = $('[data-dnd-role="dropzone"]')
 
@@ -11,9 +24,11 @@
 
 		var randomNumber = Math.floor(Math.random() * (targets.length));
 		var winningValue = $(targets[randomNumber]).attr('data-value');
-		var pile = $($('#pile > div')[0]);
+		var pile = $($('#cards > div')[0]);
 		pile.css('background-color', winningValue);
 		pile.attr('data-value', winningValue);
+
+		dndHelper.wireUpEvents();
 
 		var targets = $('[data-dnd-role="dropzone"]');
 		targets.each(function (index, target) {
@@ -70,5 +85,41 @@
 		}
 	};
 
+	var shuffle = function (array) {
+
+		var tmp, current, top = array.length;
+
+		if (top) {
+
+			while (--top) {
+
+				current = Math.floor(Math.random() * (top + 1));
+				tmp = array[current];
+				array[current] = array[top];
+				array[top] = tmp;
+			}
+		}
+
+		return array;
+	};
+
+	var getTargetCards = function (cards) {
+
+		var targetCards = [];
+		var count = 4;
+
+		if (cards.length >= count) {
+
+			while (count--) {
+
+				targetCards.push(cards.pop());
+			}
+		}
+
+		return targetCards;
+	};
+
+	var forEach = Array.prototype.forEach;
+
 	initialize();
-} ());
+} (d$d));

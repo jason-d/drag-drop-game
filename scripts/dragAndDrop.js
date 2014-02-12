@@ -4,12 +4,31 @@ var d$d = (function () {
 	var _dragSourceClassName = "drag";
 	var _isDnDTypesSupported = true;
 
-	var targets = $('[data-dnd-role="dropzone"]');
-	var draggables = $('[data-dnd-role="draggable"]');
-
 	var isDnDTypesSupported = function () {
 
 		return _isDnDTypesSupported;
+	};
+
+	var wireUpEvents = function () {
+
+		var targets = $('[data-dnd-role="dropzone"]');
+		var draggables = $('[data-dnd-role="draggable"]');
+
+		targets.each(function (index, target) {
+
+			target.addEventListener('drop', dropped, false);
+			target.addEventListener('dragenter', cancel, false);
+			target.addEventListener('dragover', dragOver, false);
+			target.addEventListener('dragleave', dragLeave, false);
+		});
+
+		draggables.each(function (index, draggable) {
+
+			$(draggable).prop('draggable', true);
+
+			draggable.addEventListener('dragstart', dragStart, false);
+			draggable.addEventListener('dragend', dragEnd, false);
+		});
 	};
 
 	var cancel = function (e) {
@@ -67,23 +86,8 @@ var d$d = (function () {
 		$(this).removeClass(_dragTargetClassName);
 	};
 
-	targets.each(function (index, target) {
-
-		target.addEventListener('drop', dropped, false);
-		target.addEventListener('dragenter', cancel, false);
-		target.addEventListener('dragover', dragOver, false);
-		target.addEventListener('dragleave', dragLeave, false);
-	});
-
-	draggables.each(function (index, draggable) {
-
-		$(draggable).prop('draggable', true);
-
-		draggable.addEventListener('dragstart', dragStart, false);
-		draggable.addEventListener('dragend', dragEnd, false);
-	});
-
 	return {
-		isDnDTypesSupported: isDnDTypesSupported
+		isDnDTypesSupported: isDnDTypesSupported,
+		wireUpEvents: wireUpEvents
 	};
 } ());
