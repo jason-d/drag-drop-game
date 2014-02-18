@@ -2,8 +2,21 @@
 
 	var initialize = function () {
 
-		var cards = ['red', 'blue', 'green', 'yellow', 'orange'];
-		var targetCards = getTargetCards(shuffle(cards));
+		var level = {
+
+			numberOfTargets: 4,
+			cards: ['red', 'blue', 'green', 'yellow', 'orange'],
+			decorateTarget: function (index, target) {
+
+				$(target).css('background-color', $(target).attr('data-value'));
+			},
+			decorateCard: function (card, value) {
+
+				$(card).css('background-color', value);
+			}
+		};
+
+		var targetCards = getTargetCards(shuffle(level.cards), level.numberOfTargets);
 
 		forEach.call(targetCards, function (card) {
 
@@ -17,16 +30,13 @@
 
 		var targets = $('[data-dnd-role="dropzone"]')
 
-		targets.each(function (index, target) {
-
-			$(target).css('background-color', $(target).attr('data-value'));
-		});
+		targets.each(level.decorateTarget);
 
 		var randomNumber = Math.floor(Math.random() * (targets.length));
 		var winningValue = $(targets[randomNumber]).attr('data-value');
-		var pile = $($('#cards > div')[0]);
-		pile.css('background-color', winningValue);
-		pile.attr('data-value', winningValue);
+		var card = $($('#cards > div')[0]);
+		card.attr('data-value', winningValue);
+		level.decorateCard(card, winningValue);
 
 		dndHelper.wireUpEvents();
 
@@ -103,10 +113,9 @@
 		return array;
 	};
 
-	var getTargetCards = function (cards) {
+	var getTargetCards = function (cards, count) {
 
 		var targetCards = [];
-		var count = 4;
 
 		if (cards.length >= count) {
 
@@ -122,4 +131,4 @@
 	var forEach = Array.prototype.forEach;
 
 	initialize();
-} (d$d));
+}(d$d));
