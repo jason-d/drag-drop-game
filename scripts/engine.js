@@ -1,20 +1,24 @@
 (function (dndHelper) {
 
+	$(document).ready(function () {
+
+		initialize();
+	});
+
+	var count = 0;
+	var correct = 0;
+	var level;
+
 	var initialize = function () {
 
-		var level = {
+		level = getLevel();
+		setupBoard();
+	};
 
-			numberOfTargets: 4,
-			cards: ['red', 'blue', 'green', 'yellow', 'orange'],
-			decorateTarget: function (index, target) {
+	var setupBoard = function () {
 
-				$(target).css('background-color', $(target).attr('data-value'));
-			},
-			decorateCard: function (card, value) {
-
-				$(card).css('background-color', value);
-			}
-		};
+		$('#cards').empty();
+		$('#targets').empty();
 
 		var targetCards = getTargetCards(shuffle(level.cards), level.numberOfTargets);
 
@@ -34,8 +38,11 @@
 
 		var randomNumber = Math.floor(Math.random() * (targets.length));
 		var winningValue = $(targets[randomNumber]).attr('data-value');
-		var card = $($('#cards > div')[0]);
+		var card = $('<div/>');
+		card.addClass('well');
+		card.attr('data-dnd-role', 'draggable');
 		card.attr('data-value', winningValue);
+		$('#cards').append(card);
 		level.decorateCard(card, winningValue);
 
 		dndHelper.wireUpEvents();
@@ -51,7 +58,7 @@
 
 			draggable.addEventListener('dragstart', dragStart, false);
 		});
-	};
+	}
 
 	var isDnDTypesSupported = function () {
 
@@ -88,11 +95,11 @@
 
 		if (value === targetValue) {
 
-			alert('Correct!');
-		} else {
-
-			alert('Try again!');
+			correct++;
+			$('#correct').html(correct);
 		}
+
+		setupBoard();
 	};
 
 	var shuffle = function (array) {
@@ -119,9 +126,9 @@
 
 		if (cards.length >= count) {
 
-			while (count--) {
+			for (var i = 0; i < count; i++) {
 
-				targetCards.push(cards.pop());
+				targetCards.push(cards[i]);
 			}
 		}
 
@@ -130,5 +137,21 @@
 
 	var forEach = Array.prototype.forEach;
 
-	initialize();
-}(d$d));
+	var getLevel = function () {
+
+		return {
+
+			numberOfTargets: 4,
+			cards: ['red', 'blue', 'green', 'yellow', 'orange', 'violet', 'aqua', 'black',
+				'fuchsia', 'chocolate', 'maroon', 'purple', 'deeppink', 'steelblue', 'limegreen'],
+			decorateTarget: function (index, target) {
+
+				$(target).css('background-color', $(target).attr('data-value'));
+			},
+			decorateCard: function (card, value) {
+
+				$(card).css('background-color', value);
+			}
+		};
+	}
+} (d$d));
