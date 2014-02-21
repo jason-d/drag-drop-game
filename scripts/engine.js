@@ -2,17 +2,19 @@
 
 	$(document).ready(function () {
 
-		initialize();
+		initialize(1);
 	});
 
-	var count = 0;
+	var countdown = 3;
+	var interval;
 	var correct = 0;
 	var level;
 
-	var initialize = function () {
+	var initialize = function (levelId) {
 
 		level = getLevel();
 		setupBoard();
+		startCountdown();
 	};
 
 	var setupBoard = function () {
@@ -58,6 +60,33 @@
 
 			draggable.addEventListener('dragstart', dragStart, false);
 		});
+	}
+
+	var startCountdown = function () {
+
+		$('#countdown').html(countdown);
+		interval = setInterval(timer, 1000);
+	};
+
+	var timer = function () {
+
+		countdown--;
+		$('#countdown').html(countdown);
+
+		if (countdown == 0) {
+
+			clearInterval(interval);
+
+			$('[data-dnd-role="dropzone"]').each(function (index, target) {
+
+				target.removeEventListener('drop', dropped, false);
+			});
+
+			$('[data-dnd-role="draggable"]').each(function (index, draggable) {
+
+				$(draggable).prop('draggable', false);
+			})
+		}
 	}
 
 	var isDnDTypesSupported = function () {
