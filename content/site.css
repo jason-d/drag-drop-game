@@ -1,5 +1,10 @@
 body {
-	padding: 15px;
+	padding-top: 40px;
+	padding-bottom: 20px;
+}
+
+.navbar-header {
+	width: 100%;
 }
 
 [draggable="true"] {

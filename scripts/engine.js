@@ -5,9 +5,10 @@
 		initialize(1);
 	});
 
-	var countdown = 3;
+	var countdown = 5;
+	var countdownStart = 5;
 	var interval;
-	var correct = 0;
+	var score = 0;
 	var level;
 
 	var initialize = function (levelId) {
@@ -64,7 +65,11 @@
 
 	var startCountdown = function () {
 
-		$('#countdown').html(countdown);
+		var countdownBar = $('#countdownBar');
+		countdownBar.html(countdownStart);
+		countdownBar.attr('aria-valuemax', countdownStart);
+		countdownBar.attr('aria-valuenow', countdownStart);
+
 		interval = setInterval(timer, 1000);
 	};
 
@@ -72,6 +77,7 @@
 
 		countdown--;
 		$('#countdown').html(countdown);
+		updateProgressBar();
 
 		if (countdown == 0) {
 
@@ -87,7 +93,16 @@
 				$(draggable).prop('draggable', false);
 			})
 		}
-	}
+	};
+
+	var updateProgressBar = function () {
+		var countdownBar = $('#countdownBar');
+		countdownBar.html(countdown);
+		countdownBar.attr('aria-valuenow', countdown);
+
+		var current = Math.floor((100 / countdownStart) * countdown);
+		countdownBar.css('width', current + '%')
+	};
 
 	var isDnDTypesSupported = function () {
 
@@ -124,8 +139,8 @@
 
 		if (value === targetValue) {
 
-			correct++;
-			$('#correct').html(correct);
+			score++;
+			$('#score').html(score);
 		}
 
 		setupBoard();
